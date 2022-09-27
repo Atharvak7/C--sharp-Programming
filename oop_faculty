@@ -1,0 +1,143 @@
+/* Given details of four faculties such as name, age, salary, designation and if faculty is permanent or not. If input
+number is 1 -> required designation is given and you need to print faculty details of that designation if their age>25
+number is something else -> Permanancy status of faculty is given and you need to find out faculty of highest salary*/
+
+
+
+ using System;
+namespace oop
+{
+    class MyClass
+    {
+        static void Main(string[] args)
+        {
+            int n = Convert.ToInt32(Console.ReadLine());
+            fac[] f = new fac[n];
+            for(int i = 0 ; i < n ; i++)
+            {
+                string name = Console.ReadLine();
+                int a = Convert.ToInt32(Console.ReadLine());
+                double sal = Convert.ToDouble(Console.ReadLine());
+                string des = Console.ReadLine();
+                bool isper = Convert.ToBoolean(Console.ReadLine());
+                f[i] = new fac(name, a, sal, des, isper);
+            }
+
+            int c = Convert.ToInt32(Console.ReadLine());
+            if(c == 1)
+            {
+                string fdes = Console.ReadLine();
+                findListWithDes(fdes, f);
+            } 
+            else
+            {
+                bool fisper = Convert.ToBoolean(Console.ReadLine());
+                findMaxSalPer(fisper, f);
+            }
+        }
+
+        static void findListWithDes(string fdes, fac[] f)
+        {
+            int temp = 0;
+            for(int i = 0 ; i < f.Length ; i++)
+            {
+                if(f[i].a > 25 && fdes.Equals(f[i].des, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    Console.WriteLine($"{f[i].name}:{f[i].a}:{f[i].sal}:{f[i].des}:{f[i].isper}");
+                    ++temp;
+                }
+            }
+            if(temp == 0)
+                Console.WriteLine("No faculty found with given designation");
+        }
+
+        static void findMaxSalPer(bool fisper, fac[] f)
+        {
+            double max = 0;
+            bool found = false;
+            string req = "";
+            for(int i = 0 ; i < f.Length ; i++)
+            {
+                if(fisper == f[i].isper && f[i].sal > max)
+                {
+                    req = f[i].name;
+                    max = f[i].sal;
+                    found = true;
+                }
+            }
+            if(found)
+                Console.WriteLine($"{req} is the highest salary");
+            else
+                Console.WriteLine("No such records found");
+        }
+    }
+
+    class fac
+    {
+        public string name {get; set;}
+        public int a {get; set;}
+        public double sal{get; set;}
+        public string des{get; set;}
+        public bool isper {get; set;}
+        public fac(string name, int a, double sal, string des, bool isper)
+        {
+            this.name = name;
+            this.a = a;
+            this.sal = sal;
+            this.des = des;
+            this.isper = isper;
+        }
+
+    }
+} 
+    /* 
+4
+Ashw
+26
+32000
+AST
+true
+anith
+28
+25000
+AST
+false
+minu
+32
+65000
+ase
+true
+zyan
+25
+31000
+AST
+true
+1
+ast 
+
+-------test case 2
+4
+Ashw
+26
+32000
+AST
+true
+anith
+28
+25000
+AST
+false
+minu
+32
+65000
+ase
+true
+zyan
+25
+31000
+AST
+true
+2
+true
+
+}*/
